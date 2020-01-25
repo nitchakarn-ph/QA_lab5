@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rifle Commission</title>
+</head>
+
+<body>
+	<div>
+		<h1>Rifle Commission</h1>
+		<form name="commission_form" onsubmit="return checkcommission();" action="">
+			<input type="text" id="lockNo" name="lockNo" placeholder="No. of Locks"/>
+			<input type="text" id="stockNo" name="stockNo" placeholder="No. of Stocks"/>
+			<input type="text" id="barrelNo" name="barrelNo" placeholder="No. of Barrels"/>
+			<input type="submit" id="submit" value="Submit">
+			<p id="error"></p>
+			<p id="result"></p>
+		</form>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function checkcommission(){
+		var num_lock = parseInt(document.commission_form.lockNo.value);
+		var num_stock = parseInt(document.commission_form.stockNo.value);
+		var num_barrel = parseInt(document.commission_form.barrelNo.value);
+		
+		if ((num_lock < 0)||(num_stock < 0)||(num_barrel < 0))
+		{	document.getElementById('error').innerHTML="Invalid input";
+		    return false;
+		}
+				
+		var price_lock = 4500;
+		var price_stock = 3000;
+		var price_barrel = 2500;
+		
+		var sold_lock = num_lock*price_lock;
+		var sold_stock = num_stock*price_stock;
+		var sold_barrel = num_barrel*price_barrel;
+		
+		var totalSales = sold_lock + sold_stock + sold_barrel;
+		
+		var paidCommission = 0;
+		
+		if (totalSales > 50000)
+		{	paidCommission = (0.1*20000) + (0.15*30000);
+			paidCommission = paidCommission + (0.2*(totalSales-50000));
+			document.getElementById('error').innerHTML="";
+			document.getElementById('result').innerHTML="Total Sales = " + totalSales + " baht => Your commission = " + paidCommission + " baht";
+			return false;
+		}
+		else if ((totalSales > 20000) && (totalSales < 50000))
+		{	paidCommission = 0.1*20000;
+			paidCommission = paidCommission + (0.15*(totalSales-20000));
+			document.getElementById('error').innerHTML="";
+			document.getElementById('result').innerHTML="Total Sales = " + totalSales + " baht => Your commission = " + paidCommission + " baht";
+			return false;
+		}
+		else if ((totalSales > 10000) && (totalSales < 20000))
+		{	paidCommission = 0.1*totalSales;
+			document.getElementById('error').innerHTML="";
+			document.getElementById('result').innerHTML="Total Sales = " + totalSales + " baht => Your commission = " + paidCommission + " baht";
+			return false;
+		}
+		else
+		{	paidCommission = 0;
+			document.getElementById('error').innerHTML="";
+			document.getElementById('result').innerHTML="Total Sales = " + totalSales + " baht => Your commission = " + paidCommission + " baht";
+			return false;
+		}
+		
+	}
+</script>
+
+
+<style>
+body {
+  font-family: Arial;
+	background: #f2f2f2
+}
+#errors {
+	text-align: right;
+}
+h1 {
+	color: #00BCD4;
+  font-weight: lighter;
+	font-size: 28px;
+  margin-bottom: 0;
+}
+
+input[type=text], input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #00BCD4;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    font-size: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #607d8b;
+}
+
+div {
+		margin: 2em auto;
+    width: 300px;
+		border-radius: 0 0 2px 2px;    
+		background-color: #ffffff;
+    padding: 18px 50px 40px;
+}
+</style>
+
+</html>
